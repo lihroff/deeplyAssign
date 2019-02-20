@@ -14,7 +14,7 @@ test('deeply assign properties of source to the target', () => {
 });
 
 test('deeply assign do not change Intermediate variable', () => {
-  const foo = () => {},
+  const foo = () => { },
     bar = console.log;
 
   const midlle1 = {
@@ -43,3 +43,38 @@ test('deeply assign do not change Intermediate variable', () => {
     prop3: true,
   });
 });
+
+test('deeply assign array', () => {
+  expect(
+    deeplyAssign(
+      { test: 'array' },
+      [0, 1, 2, 3],
+      [3, 2, 1, { overwrite: true }, { sub: ['abcd'] }]
+    )
+  ).toEqual({
+    0: 3,
+    1: 2,
+    2: 1,
+    3: { overwrite: true },
+    4: { sub: { 0: 'abcd' } },
+    test: 'array',
+  });
+});
+
+test('deeply assign to null', () => {
+  expect(
+    () =>
+      deeplyAssign(
+        null,
+        {}
+      )
+  ).toThrowError(TypeError)
+});
+
+test('Provide non-iterable and non-enumerable as source', () => {
+  expect(
+    deeplyAssign(
+      { flag: 'non-iterable' },
+      null, undefined, function fn() { return 'this a function'; }
+    )).toEqual({ flag: 'non-iterable' })
+})

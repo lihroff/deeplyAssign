@@ -12,7 +12,7 @@ $ npm i deeplyassign
 > You can use any module sys to use determined by your environment, such as below:
 
 ```js
-import deeplyAssign from '../src/index';
+import deeplyAssign from 'deeplyAssign';
 
   const source1 = { 
     info: { 
@@ -44,7 +44,7 @@ import deeplyAssign from '../src/index';
 
 ## Behavior
   - This does same behavior as [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description), and run in recursive for deep clone.
-  - There is no direct reference to the object type and the intermediate variable is not modified(see test).
+  - There is no direct reference to the object type and the intermediate variable is not modified(see [test](https://github.com/Tommy-White/deeplyAssign/blob/master/__tests__/index.js#L16)).
   - When some props value are method, the reference is taken and the additional props are retained.
   - String and Symbol properties are copied.
 

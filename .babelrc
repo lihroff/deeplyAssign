@@ -1,0 +1,18 @@
+
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "modules": "commonjs"
+      }
+    ],
+    "@babel/preset-typescript"
+  ],
+  "plugins": ["transform-remove-console"],
+  "env": {
+    "production": {
+      "presets": ["minify"]
+    }
+  }
+}

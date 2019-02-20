@@ -1,14 +1,6 @@
-const typeor = {
-  object: x => {
-    const toStringIndicator = Object.prototype.toString.call(x) === '[object Object]';
-    return x && !toStringIndicator
-      ? typeof x === 'object'
-      : toStringIndicator;
-  },
-  function: x => typeof x === 'function'
-}
+import typeor from './typeor'
 
-function deeplyAssign(target, ...sources) {
+function deeplyAssign(target, ...sources: any[]): object {
   if (target == null) {
     throw new TypeError('Cannot convert undefined or null to object');
   }
@@ -18,7 +10,7 @@ function deeplyAssign(target, ...sources) {
   const isEnumerable = Object.prototype.propertyIsEnumerable;
 
   // creates an object wrapper for Number etc...
-  let ret = Object(target);
+  let ret = Object(target) as object;
 
   for (let index = 0; index < sources.length; index++) {
     const nextSource = sources[index]

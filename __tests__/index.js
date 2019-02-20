@@ -1,4 +1,4 @@
-import deeplyAssign from '../src/index';
+import deeplyAssign from '../src/index'
 
 test('deeply assign properties of source to the target', () => {
   expect(
@@ -10,27 +10,27 @@ test('deeply assign properties of source to the target', () => {
     info: { author: 'moZLeo', sex: 'male' },
     finish: true,
     other: 'follow',
-  });
-});
+  })
+})
 
 test('deeply assign do not change Intermediate variable', () => {
-  const foo = () => { },
-    bar = console.log;
+  const foo = () => {},
+    bar = console.log
 
   const midlle1 = {
     prop1: 'do',
     prop2: 'not change',
-  };
+  }
   const midlle2 = {
     prop1: 'Ibid.',
     prop2: foo,
     prop3: true,
-  };
+  }
 
-  Object.freeze(foo);
-  Object.freeze(bar);
-  Object.freeze(midlle1);
-  Object.freeze(midlle2);
+  Object.freeze(foo)
+  Object.freeze(bar)
+  Object.freeze(midlle1)
+  Object.freeze(midlle2)
 
   // If you what to rewrite a TypeError is invorked.
   // midlle2.prop2 = bar
@@ -41,8 +41,8 @@ test('deeply assign do not change Intermediate variable', () => {
     prop1: 'try to change',
     prop2: bar,
     prop3: true,
-  });
-});
+  })
+})
 
 test('deeply assign array', () => {
   expect(
@@ -58,23 +58,17 @@ test('deeply assign array', () => {
     3: { overwrite: true },
     4: { sub: { 0: 'abcd' } },
     test: 'array',
-  });
-});
+  })
+})
 
 test('deeply assign to null', () => {
-  expect(
-    () =>
-      deeplyAssign(
-        null,
-        {}
-      )
-  ).toThrowError(TypeError)
-});
+  expect(() => deeplyAssign(null, {})).toThrowError(TypeError)
+})
 
 test('Provide non-iterable and non-enumerable as source', () => {
   expect(
-    deeplyAssign(
-      { flag: 'non-iterable' },
-      null, undefined, function fn() { return 'this a function'; }
-    )).toEqual({ flag: 'non-iterable' })
+    deeplyAssign({ flag: 'non-iterable' }, null, undefined, function fn() {
+      return 'this a function'
+    })
+  ).toEqual({ flag: 'non-iterable' })
 })

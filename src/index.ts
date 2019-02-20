@@ -2,15 +2,15 @@ import typeor from './typeor'
 
 function deeplyAssign(target, ...sources: any[]): object {
   if (target == null) {
-    throw new TypeError('Cannot convert undefined or null to object');
+    throw new TypeError('Cannot convert undefined or null to object')
   }
 
-  const hasOwnProperty = Object.prototype.hasOwnProperty;
-  const getOwnSymbols = Object.getOwnPropertySymbols;
-  const isEnumerable = Object.prototype.propertyIsEnumerable;
+  const hasOwnProperty = Object.prototype.hasOwnProperty
+  const getOwnSymbols = Object.getOwnPropertySymbols
+  const isEnumerable = Object.prototype.propertyIsEnumerable
 
   // creates an object wrapper for Number etc...
-  let ret = Object(target) as object;
+  let ret = Object(target) as object
 
   for (let index = 0; index < sources.length; index++) {
     const nextSource = sources[index]
@@ -23,12 +23,12 @@ function deeplyAssign(target, ...sources: any[]): object {
             // use {} for targer is make sure that it not overwrite middle variable
             ret[prop] = deeplyAssign({}, ret[prop], nextSource[prop])
           } else if (typeor.function(nextSource[prop])) {
-            // first use same reference to make sure ret[prop] not null or undefined 
-            ret[prop] = nextSource[prop];
+            // first use same reference to make sure ret[prop] not null or undefined
+            ret[prop] = nextSource[prop]
             // then invork deeply assign
             deeplyAssign(ret[prop], nextSource[prop])
           } else {
-            ret[prop] = nextSource[prop];
+            ret[prop] = nextSource[prop]
           }
         }
       }
@@ -37,14 +37,14 @@ function deeplyAssign(target, ...sources: any[]): object {
         const symbolProps = getOwnSymbols(nextSource)
         for (let symbolProp of symbolProps) {
           if (isEnumerable.call(nextSource, symbolProp)) {
-            ret[symbolProp] = nextSource[symbolProp];
+            ret[symbolProp] = nextSource[symbolProp]
           }
         }
       }
     }
   }
 
-  return ret;
+  return ret
 }
 
 export default deeplyAssign

@@ -1,4 +1,4 @@
-function isFnOrObject(x) {
+function isFnOrObject(x){
   const toStringIndicator =  Object.prototype.toString.call(x) === '[object Object]';
   return typeof x === 'function' 
     ? true 
@@ -47,5 +47,3 @@ function deeplyAssign(target, ...sources) {
 
   return ret;
 }
-
-export default deeplyAssign

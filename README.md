@@ -51,9 +51,17 @@ import deeplyAssign from 'deeplyassign';
 ```
 
 ## Behavior
-  - This does same behavior as [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description), and run in recursive for deep clone.
+  - This does basically same behavior as [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description), and run in recursive for deep clone.
+    - difference: The value type of the attribute of the source object is used when the corresponding attribute value type of target and source is inconsistent. This means that the value of the original target attribute will be discarded or overridden. Such as:
+    ```js
+    const target = { prop: { org: 'xxx' } };  // type of target.prop => 'object'
+    const source = { prop: [ 0, 1 ] };        // type of source.prop => 'array'
+
+    console.log(target, source)               // { prop: [ 0, 1 ] }
+    ```
+
   - There is no direct reference to the object type and the intermediate variable is not modified(see [test](https://github.com/Tommy-White/deeplyAssign/blob/master/__tests__/index.js#L16)).
-    - Compatible with circular reference objects.
+    - Compatible with one layer of circular reference objects.
   - When a property value of a target is a function, cloning with a reference retains the additional property (so modifying it affects the original object). 
   - String and Symbol properties are copied(IE browser automatically ignores this type attribute because it is not compatible with the Symbol type.).
 

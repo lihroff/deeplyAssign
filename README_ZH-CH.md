@@ -47,9 +47,17 @@ import deeplyAssign from 'deeplyassign';
 ```
 
 # 行为
-- 此与[Object.assign()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description)具有相同的行为，并且以递归的方式做深度克隆。
+- 此与[Object.assign()](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description)具有几乎相同的行为，并且以递归的方式做深度克隆。
+  - 当target与source相对应属性值类型不一致时，采用source对象属性的值类型。这代表原target的属性的值会被放弃或覆盖。例如： 
+  ```js
+  const target = { prop: { org: 'xxx' } };  // type of target.prop => 'object'
+  const source = { prop: [ 0, 1 ] };        // type of source.prop => 'array'
+
+  console.log(target, source)               // { prop: [ 0, 1 ] }
+  ```
+
 - 没有直接的对象引用并且不会修改中间变量（参考[test](https://github.com/Tommy-White/deeplyAssign/blob/master/__tests__/index.js#L16)）
-  - 适用于循环♻️引用对象。
+  - 适用于一层循环♻️引用对象。
 - 当一个target的一个属性值为函数时，采用引用进行克隆并会保留附加属性(所以对其修改会影响原对象)。
 - String类型和Symbol类型的属性都会被拷贝(IE浏览器由于不兼容Symbol类型所以自动忽略此类型属性)。
 

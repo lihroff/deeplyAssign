@@ -1,4 +1,4 @@
-// const _curry = (fn: Function) => {
+// const curry = (fn: Function) => {
 //   const curryN = (n, fn) => (...args: any[]) =>
 //     args.length >= n
 //       ? fn(...args)

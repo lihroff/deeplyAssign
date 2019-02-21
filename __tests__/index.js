@@ -56,7 +56,7 @@ test('deeply assign array', () => {
     1: 2,
     2: 1,
     3: { overwrite: true },
-    4: { sub: { 0: 'abcd' } },
+    4: { sub: ['abcd'] },
     test: 'array',
   })
 })
@@ -73,9 +73,29 @@ test('Provide non-iterable and non-enumerable as source', () => {
   ).toEqual({ flag: 'non-iterable' })
 })
 
-test('Nested loop', () => {
-  const loop = {}
-  loop.nest = loop
+test(' circular reference.', () => {
+  const loop1 = {},
+    arr = [],
+    loop2 = { arr }
+  loop1.nest = loop1
+  loop2.arr[0] = arr
 
-  expect(deeplyAssign({}, { loop })).toEqual({ loop })
+  Object.freeze(loop1)
+  Object.freeze(loop2)
+
+  expect(deeplyAssign({}, { loop1 }, { loop2 })).toEqual({ loop1, loop2 })
 })
+
+// know issue: deep circular reference error.
+// test('Deep  circular reference.', () => {
+//   const loop = { deep: {} }
+//   loop.deep.nest = loop
+//   expect(deeplyAssign({}, { loop })).toEqual({ loop })
+// })
+
+// test('Deep  circular reference.', () => {
+//   const bar = { }
+//   const foo = { loop: bar }
+//   bar.loop = foo
+//   expect(deeplyAssign({}, bar, foo)).toEqual({ foo })
+// })

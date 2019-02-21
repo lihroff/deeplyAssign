@@ -1,4 +1,5 @@
 import typeor from './typeor'
+import { isShadowNested } from './utils'
 
 function deeplyAssign(target, ...sources: any[]): object {
   if (target == null) {
@@ -20,8 +21,13 @@ function deeplyAssign(target, ...sources: any[]): object {
         // Avoid bugs when hasOwnProperty is shadowed
         if (hasOwnProperty.call(nextSource, prop)) {
           if (typeor.object(nextSource[prop])) {
-            // use {} for targer is make sure that it not overwrite middle variable
-            ret[prop] = deeplyAssign({}, ret[prop], nextSource[prop])
+            if (isShadowNested(nextSource, prop)) {
+              // treat as nest loop
+              ret[prop] = nextSource[prop]
+            } else {
+              // use {} for targer is make sure that it not overwrite middle variable
+              ret[prop] = deeplyAssign({}, ret[prop], nextSource[prop])
+            }
           } else if (typeor.function(nextSource[prop])) {
             // first use same reference to make sure ret[prop] not null or undefined
             ret[prop] = nextSource[prop]
@@ -33,7 +39,7 @@ function deeplyAssign(target, ...sources: any[]): object {
         }
       }
       // Currently Symbol and its stuff is not support by IE
-      if (typeof Symbol === 'function' || typeof getOwnSymbols === 'function') {
+      if (typeor.function(Symbol) || typeor.function(getOwnSymbols)) {
         const symbolProps = getOwnSymbols(nextSource)
         for (let symbolProp of symbolProps) {
           if (isEnumerable.call(nextSource, symbolProp)) {

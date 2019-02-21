@@ -17,11 +17,11 @@ test('deeply assign do not change Intermediate variable', () => {
   const foo = () => {},
     bar = console.log
 
-  const midlle1 = {
+  const middle1 = {
     prop1: 'do',
     prop2: 'not change',
   }
-  const midlle2 = {
+  const middle2 = {
     prop1: 'Ibid.',
     prop2: foo,
     prop3: true,
@@ -29,14 +29,14 @@ test('deeply assign do not change Intermediate variable', () => {
 
   Object.freeze(foo)
   Object.freeze(bar)
-  Object.freeze(midlle1)
-  Object.freeze(midlle2)
+  Object.freeze(middle1)
+  Object.freeze(middle2)
 
   // If you what to rewrite a TypeError is invorked.
-  // midlle2.prop2 = bar
+  // middle2.prop2 = bar
 
   expect(
-    deeplyAssign({}, midlle1, midlle2, { prop1: 'try to change', prop2: bar })
+    deeplyAssign({}, middle1, middle2, { prop1: 'try to change', prop2: bar })
   ).toEqual({
     prop1: 'try to change',
     prop2: bar,
@@ -71,4 +71,11 @@ test('Provide non-iterable and non-enumerable as source', () => {
       return 'this a function'
     })
   ).toEqual({ flag: 'non-iterable' })
+})
+
+test('Nested loop', () => {
+  const loop = {}
+  loop.nest = loop
+
+  expect(deeplyAssign({}, { loop })).toEqual({ loop })
 })

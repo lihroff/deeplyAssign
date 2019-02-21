@@ -13,7 +13,7 @@ $ yarn add deeplyassign
 ```
 
 ## 用法
-你可以使用任何模块导入导出方式来使用，这取决于你的环境配置，事例如下：
+你可以使用任何模块导入导出方式来使用，这取决于你的环境配置，示例如下：
 ```js
 //const deeplyAssign = require("deeplyassign").default
 import deeplyAssign from 'deeplyassign';

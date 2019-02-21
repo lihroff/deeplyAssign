@@ -10,7 +10,7 @@ Install with [npm](https://www.npmjs.com/):
 $ npm i deeplyassign
 ```
 
-Install with[yarn](https://yarnpkg.com/en/):
+Install with [yarn](https://yarnpkg.com/en/):
 ```
 $ yarn add deeplyassign
 ```

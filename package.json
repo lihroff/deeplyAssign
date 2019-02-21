@@ -1,6 +1,6 @@
 {
   "name": "deeplyassign",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A deeply copy the values of all enumerable own properties and symbol properties from one or more source objects to a target object. It will return the target object.",
   "main": "dist/index.js",
   "scripts": {

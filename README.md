@@ -53,7 +53,8 @@ import deeplyAssign from 'deeplyassign';
 ## Behavior
   - This does same behavior as [Object.assign()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/assign#Description), and run in recursive for deep clone.
   - There is no direct reference to the object type and the intermediate variable is not modified(see [test](https://github.com/Tommy-White/deeplyAssign/blob/master/__tests__/index.js#L16)).
-  - When a property value of a target is a function, cloning with a reference retains the additional property (so modifying it affects the original object) 
+    - Compatible with circular reference objects.
+  - When a property value of a target is a function, cloning with a reference retains the additional property (so modifying it affects the original object). 
   - String and Symbol properties are copied(IE browser automatically ignores this type attribute because it is not compatible with the Symbol type.).
 
 ## License
